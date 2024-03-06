@@ -32,9 +32,10 @@ class TaskWindow(QWidget):
 
         # Добавляем три абзаца текста
         for _ in range(3):
-            paragraph_label = QLabel("Абзац текста. Это может быть довольно длинным, в зависимости от вашего текста.")
+            paragraph_label = QLabel("Абзац текста. Это может быть довольно длинным, в зависимости от вашего текста.инным, в зависимосинным, в зависимосинным, в зависимосинным, в зависимосинным, в зависимосинным, в зависимосинным, в зависимосинным, в зависимос")
             paragraph_label.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignTop)
             paragraph_label.setStyleSheet("font-size: 14px; color: #FFFFFF; background-color: none; margin: 10%;")
+            paragraph_label.setWordWrap(True)
             text_input_layout.addWidget(paragraph_label, alignment=Qt.AlignmentFlag.AlignTop)
 
         # Устанавливаем пропорции для текста
@@ -45,11 +46,11 @@ class TaskWindow(QWidget):
         scroll_area = QScrollArea(self)
         scroll_area.setWidgetResizable(True)
         scroll_area.setWidget(text_block)
-        scroll_area.setMaximumWidth(int(parent.width() * 0.75))
+        # scroll_area.setMaximumWidth(int(parent.width() * 0.75))
         scroll_area.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAsNeeded)
         scroll_area.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAsNeeded)
         scroll_area.setStyleSheet("QScrollArea { background: transparent; } QScrollBar:vertical { border-color: black; background-color: gray; }")
-        scroll_area.setMaximumHeight(int(parent.height()*0.7))
+        scroll_area.setFixedHeight(int(parent.height()*0.85))
 
         print(scroll_area.maximumHeight())
 
