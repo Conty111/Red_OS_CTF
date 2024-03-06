@@ -1,0 +1,11 @@
+[
+    {
+        "name": "Задание 1",
+        "theme": "Модули ядра ОС",
+        "hint": "Юзай эти команды",
+        "theory": "link",
+        "description": "some info for task",
+        "commands_before": ["docker run"],
+        "commands_after": ["docker stop", "docker container prune"]
+    }
+]
