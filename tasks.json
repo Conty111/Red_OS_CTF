@@ -1,11 +1,20 @@
-[
-    {
-        "name": "Задание 1",
-        "theme": "Модули ядра ОС",
-        "hint": "Юзай эти команды",
-        "theory": "link",
-        "description": "some info for task",
-        "commands_before": ["docker run"],
-        "commands_after": ["docker stop", "docker container prune"]
-    }
-]
+
+{
+    "tasks": [
+        {
+            "theme": "Модули ядра ОС",
+            "hint": "Юзай эти команды",
+            "text": "some info for task",
+            "setup_commands": ["docker run"],
+            "reset_commands": ["docker stop", "docker container prune"]
+        },
+
+        {
+            "theme": "Модули ядрaaaaaaа ОС",
+            "hint": "Юзай эти команды",
+            "text": "some info for task",
+            "setup_commands": ["docker run"],
+            "reset_commands": ["docker stop", "docker container prune"]
+        }
+    ]
+}
