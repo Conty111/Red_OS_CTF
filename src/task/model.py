@@ -3,23 +3,24 @@ from pydantic import BaseModel, HttpUrl, ConfigDict
 
 import os
 
+from config import Config
+
+
 class TaskModel(BaseModel):
     model_config = ConfigDict(from_attributes=True)
     text: str
     theme: str
     hint: str
+    level: int
     theory_link: HttpUrl | None = None
-    setup_commands: List[str]
-    reset_commands: List[str]
+    task_script_name: str
     is_completed: bool = False
 
-    def setup_system(self):
-        for command in self.setup_commands:
-            os.system(command)
+    def setup_system(self, flag: str):
+        os.system(f"./{Config.PATH_TO_TASKS_SCRIPTS}/setup/{self.task_script_name} {flag}")
 
     def reset_system(self):
-        for command in self.reset_commands:
-            os.system(command)
+        os.system(f"./{Config.PATH_TO_TASKS_SCRIPTS}/reset/{self.task_script_name}")
 
 
 class TasksList(BaseModel):

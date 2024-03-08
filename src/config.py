@@ -1,6 +1,8 @@
 
 
 class Config:
+    PATH_TO_TASKS_SCRIPTS = "tasks-scripts"
+
     CHECK_BUTTON_STYLES_URL = "src/styles.qss"
     BACKGROUND_STYLESHEET = "background-image: url('img/background.jpg'); background-repeat: no-repeat; background-position: center;"
 
