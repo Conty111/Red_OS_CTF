@@ -177,7 +177,7 @@ class TaskWindow(QWidget):
     def show_question(self):
         t = self.tasks[self.current_task]
 
-        self.title.setText(f"Задание {self.current_task+1}.{t.theme}")
+        self.title.setText(f"Задание {self.current_task+1}. {t.theme}")
         self.text.setText(f"Описание: {t.text}")
         self.hint.setText(f"Подсказки: {t.hint}")
         if t.theory_link:
@@ -221,7 +221,6 @@ class TaskWindow(QWidget):
             self.current_task += 1
             self.show_question()
         else:
-            self.show_question()
             self.success.setText("Это самое последнее задание")
             self.success.setStyleSheet("font-size: 20px; color: #FFFFFF; background-color: red; margin: 7%; padding: 20%; border-radius: 15%;")
             self.success.show()

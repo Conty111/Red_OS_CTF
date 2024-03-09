@@ -3,14 +3,13 @@ from dotenv import load_dotenv
 from os import environ
 import json
 
-from PyQt5.QtGui import QColorConstants, QPixmap
-from PyQt5.QtWidgets import QApplication, \
-    QWidget, QHBoxLayout, QPushButton, \
-    QLineEdit, QGraphicsOpacityEffect, \
-    QVBoxLayout, QLabel
+from PyQt5.QtGui import QPixmap
+from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QStackedWidget, QVBoxLayout
 
 from config import Config
 from flags import generate_flags
+
+from hello.hello import HelloWidget
 from task.task import TaskWindow
 from task.model import TasksList
 
@@ -26,7 +25,7 @@ class MainWindow(QWidget):
             self.tasksList: TasksList = TasksList.model_validate(tasks_data)
         
         with open(file=answers_path, mode='+r') as file:
-            answers = file.readlines()
+            self.answers = file.readlines()
 
         self.resize(cfg.DEFAULT_WINDOW_WIDTH, cfg.DEFAULT_WINDOW_HEIGHT)
         self.setWindowTitle("Window Title! Welcome!")
@@ -43,9 +42,22 @@ class MainWindow(QWidget):
         dark_overlay.setStyleSheet("background-color: rgba(0, 0, 0, 0.3);")
         dark_overlay.setGeometry(0, 0, background_image.width(), background_image.height())
 
-        self.task_window = TaskWindow(cfg=self.cfg, parent=self, tasks=self.tasksList.tasks, answers=answers)
+        # Вот эти 2 виджета
+        self.stacked_widget = QStackedWidget(self)
+        self.task_window = TaskWindow(cfg=self.cfg, parent=self, tasks=self.tasksList.tasks, answers=self.answers)
+        self.hello = HelloWidget(parent=self, next_func=self.start)
+
+        self.stacked_widget.addWidget(self.hello)
+        self.stacked_widget.addWidget(self.task_window)
+
+        self.m_layout = QVBoxLayout(self)
+        self.m_layout.addWidget(self.stacked_widget)
+        self.setLayout(self.m_layout)
+    
+    def start(self):
+        self.stacked_widget.setCurrentWidget(self.task_window)
         self.task_window.show_question()
-        self.setLayout(self.task_window.main_layout)
+    
 
 
 if __name__ == '__main__':
