@@ -4,7 +4,7 @@ class Config:
     PATH_TO_TASKS_SCRIPTS = "tasks-scripts"
 
     CHECK_BUTTON_STYLES_URL = "src/styles.qss"
-    BACKGROUND_STYLESHEET = "background-image: url('img/background.jpg'); background-repeat: no-repeat; background-position: center;"
+    BACKGROUND_STYLESHEET = "background-image: url('img/background1.png'); background-repeat: no-repeat; background-position: center;"
 
     DEFAULT_WINDOW_WIDTH = 750
     DEFAULT_WINDOW_HEIGHT = 700

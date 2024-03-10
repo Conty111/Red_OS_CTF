@@ -3,7 +3,7 @@ from dotenv import load_dotenv
 from os import environ
 import json
 
-from PyQt5.QtGui import QPixmap
+from PyQt5.QtGui import QPixmap, QIconEngine, QIcon
 from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QStackedWidget, QVBoxLayout
 
 from config import Config
@@ -28,14 +28,15 @@ class MainWindow(QWidget):
             self.answers = file.readlines()
 
         self.resize(cfg.DEFAULT_WINDOW_WIDTH, cfg.DEFAULT_WINDOW_HEIGHT)
-        self.setWindowTitle("Window Title! Welcome!")
+        self.setWindowTitle("РЕД ОС тренер")
         self.setMinimumSize(*cfg.MINIMUM_WINDOW_SIZE)
+        self.setWindowIcon(QIcon(QPixmap("img/background1.png")))
 
         background_image = QPixmap("img/background.jpg")  # Замените "background.jpg" на путь к вашему изображению
         background_label = QLabel(self)
         background_label.setPixmap(background_image)
         background_label.setGeometry(0, 0, background_image.width(), background_image.height())
-        background_label.setStyleSheet("background-image: black;")
+        background_label.setStyleSheet("background-repeat: no-repeat; background-position: center;")
 
         # Добавляем цветовой слой для затемнения фона
         dark_overlay = QLabel(self)
@@ -57,6 +58,9 @@ class MainWindow(QWidget):
     def start(self):
         self.stacked_widget.setCurrentWidget(self.task_window)
         self.task_window.show_question()
+
+    def closeEvent(self, event):
+        self.task_window.closeEvent(event=event)
     
 
 

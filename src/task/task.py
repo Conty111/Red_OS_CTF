@@ -1,9 +1,9 @@
 from typing import List
+import sys
 
-from PyQt5.QtGui import QTextOption, QTextBlockFormat
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import \
-    QWidget, QHBoxLayout, QPushButton, QTextEdit, \
+    QWidget, QHBoxLayout, QPushButton, QMessageBox, \
     QLineEdit, QVBoxLayout, QLabel, QScrollArea \
 
 from config import Config
@@ -41,7 +41,6 @@ class TaskWindow(QWidget):
         # Добавляем заголовок
         title_label = QLabel(parent=self)
         title_label.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignLeft)
-        title_label.setStyleSheet("font-size: 26px; font-weight: bold; color: #FFFFFF; margin: 25%;")
         self.title = title_label
         text_input_layout.addWidget(title_label, alignment=Qt.AlignmentFlag.AlignTop, stretch=1)
 
@@ -178,6 +177,15 @@ class TaskWindow(QWidget):
         t = self.tasks[self.current_task]
 
         self.title.setText(f"Задание {self.current_task+1}. {t.theme}")
+        if t.level == 0:
+            self.title.setStyleSheet('color: green; font-size: 26px; font-weight: bold; ')
+        elif t.level == 1:
+            self.title.setStyleSheet('color: yellow; font-size: 26px; font-weight: bold; ')
+        elif t.level == 2:
+            self.title.setStyleSheet('color: orange; font-size: 26px; font-weight: bold; ')
+        elif t.level == 3:
+            self.title.setStyleSheet('color: red; font-size: 26px; font-weight: bold; ')
+            
         self.text.setText(f"Описание: {t.text}")
         self.hint.setText(f"Подсказки: {t.hint}")
         if t.theory_link:
@@ -189,6 +197,7 @@ class TaskWindow(QWidget):
         if not t.is_completed:
             t.setup_system(self.answers[self.current_task])
             self.success.hide()
+            self.input_field.clear()
             self.input_field.show()
             self.check_button.show()
         else:
@@ -202,7 +211,7 @@ class TaskWindow(QWidget):
 
 
     def check_answer(self):
-        user_answer = self.input_field.text()
+        user_answer = self.input_field.text().replace(" ", "")
         correct_answer = self.answers[self.current_task][:-1]
 
         if user_answer == correct_answer:
@@ -220,6 +229,7 @@ class TaskWindow(QWidget):
                 self.tasks[self.current_task].reset_system()
             self.current_task += 1
             self.show_question()
+            
         else:
             self.success.setText("Это самое последнее задание")
             self.success.setStyleSheet("font-size: 20px; color: #FFFFFF; background-color: red; margin: 7%; padding: 20%; border-radius: 15%;")
@@ -238,6 +248,6 @@ class TaskWindow(QWidget):
     
     def closeEvent(self, event):
         if not self.tasks[self.current_task].is_completed:
-                self.tasks[self.current_task].reset_system()
+            self.tasks[self.current_task].reset_system()
         event.accept()
 
