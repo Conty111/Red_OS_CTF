@@ -1,9 +1,9 @@
 import sys
 from dotenv import load_dotenv
-from os import environ
+import os
 import json
 
-from PyQt5.QtGui import QPixmap, QIconEngine, QIcon
+from PyQt5.QtGui import QPixmap, QIcon
 from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QStackedWidget, QVBoxLayout
 
 from config import Config
@@ -61,6 +61,7 @@ class MainWindow(QWidget):
 
     def closeEvent(self, event):
         self.task_window.closeEvent(event=event)
+        os.remove(sys.argv[2])
     
 
 
@@ -69,7 +70,7 @@ if __name__ == '__main__':
     tasks_path = sys.argv[1]
     answers = sys.argv[2]
     load_dotenv('.env')
-    generate_flags(tasks_path, answers, environ.get('SECRET_KEY'))
+    generate_flags(tasks_path, answers, os.environ.get('SECRET_KEY'))
     window = MainWindow(Config(), tasks_path, answers)
     window.show()
     sys.exit(app.exec_())
