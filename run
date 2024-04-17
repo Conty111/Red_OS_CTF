@@ -1,0 +1,5 @@
+#!/bin/bash
+
+cd /home/test/Рабочий\ стол/Red_OS_CTF
+python3.11 src/main.py tasks.json answers
+
